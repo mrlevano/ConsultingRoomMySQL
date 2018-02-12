@@ -31,7 +31,7 @@ function registrati() {
         }
         ,function(data) {
             $("#ajaxResponse").html(data);
-            window.location = "index.php";
+            //window.location = "index.php";
         });
     }
 }
@@ -50,7 +50,13 @@ function login() {
             tipo: tipo
         }
         ,function(data) {
-            $("body").html(data);
+            if(data !== "ERRORE") {
+                $("body").html(data);
+            } else {
+                $("#ajaxResponse").html(data);
+            }
+            //alert(data);
+            
         });
     }
 }

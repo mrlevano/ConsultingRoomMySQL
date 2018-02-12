@@ -64,4 +64,18 @@ class Database {
             echo ("NOT GOOD. <br />Errore : " . $ex->getMessage());
         }
     }
+    
+    public function findAll() {
+        $array = [];
+        try {
+            $conn = new PDO("mysql:host=$this->servername;dbname=$this->dbName", $this->username, $this->password);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "SELECT * FROM studente";
+            $output = $conn->query($sql);
+            $array = $output->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $ex) {
+            echo ("NOT GOOD. <br />Errore : " . $ex->getMessage());
+        }
+        return $array;
+    }
 }
