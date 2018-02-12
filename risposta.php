@@ -23,9 +23,9 @@ if($tipoAzione == "0") {
         $sql = "SELECT * FROM studente WHERE matr = '$matr' AND pwd = '$passwd'";
         $output = $conn->query($sql);
         $array = $output->fetchAll(PDO::FETCH_ASSOC);
-        /*$figo = json_encode($array);
-        echo($figo);*/
-        if(count($array) > 0){
+        $figo = json_encode($array);
+        echo($figo);
+        /*if(count($array) > 0){
             foreach($array as $valoreE) {
                 foreach($valoreE as $chiave=>$valore) {
                     if($chiave != "fotoProfilo") {
@@ -37,7 +37,7 @@ if($tipoAzione == "0") {
             }
         } else {
             echo("ERRORE");
-        }
+        }*/
     } catch (PDOException $ex) {
         echo ("NOT GOOD. <br />Errore : " . $ex->getMessage());
     }

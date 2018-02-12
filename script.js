@@ -50,12 +50,12 @@ function login() {
             tipo: tipo
         }
         ,function(data) {
-            if(data !== "ERRORE") {
+            /*if(data !== "ERRORE") {
                 $("body").html(data);
             } else {
                 $("#ajaxResponse").html(data);
-            }
-            //alert(data);
+            }*/
+            alert(data);
             
         });
     }
