@@ -23,21 +23,13 @@ if($tipoAzione == "0") {
         $sql = "SELECT * FROM studente WHERE matr = '$matr' AND pwd = '$passwd'";
         $output = $conn->query($sql);
         $array = $output->fetchAll(PDO::FETCH_ASSOC);
-        $figo = json_encode($array);
-        echo($figo);
-        /*if(count($array) > 0){
-            foreach($array as $valoreE) {
-                foreach($valoreE as $chiave=>$valore) {
-                    if($chiave != "fotoProfilo") {
-                        echo ("<p>$chiave = $valore</p> <br/>");
-                    } else {
-                        echo("<img id='myImage' src='files/$valore' style='height: 100px;width: 100px;' />");
-                    }
-                }
-            }
+        
+        if(count($array) > 0){
+            $figo = json_encode($array);
+            echo($figo);
         } else {
             echo("ERRORE");
-        }*/
+        }
     } catch (PDOException $ex) {
         echo ("NOT GOOD. <br />Errore : " . $ex->getMessage());
     }
@@ -61,7 +53,7 @@ if($tipoAzione == "0") {
             $sql = "INSERT INTO Studente (matr, nome, cognome, sesso, pwd, fotoProfilo)";
             $sql .= "VALUES ($matr, '$nome', '$cognome', '$sesso', '$passwd', '$nomeImmagine')";
             $conn->exec($sql);
-        echo ("VERY GOOD e nome immagine : $nomeImmagine");
+        echo ("OK");
         } else {
             echo("Utente già registrato.");
         }
