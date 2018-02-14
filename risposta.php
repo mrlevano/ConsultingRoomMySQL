@@ -12,33 +12,24 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbName = "consultingroom";
+$array = [];
 
 if($tipoAzione == "0") {
-    $array = [];
     $matr = $_POST["matr"];
     $passwd = $_POST["passwd"];
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbName", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "SELECT * FROM `studente` WHERE matr = '$matr' AND pwd = '$passwd'";
+        $sql = "SELECT * FROM studente WHERE matr = '$matr' AND pwd = '$passwd'";
         $output = $conn->query($sql);
         $array = $output->fetchAll(PDO::FETCH_ASSOC);
+        
         if(count($array) > 0){
-            foreach($array as $valoreE) {
-                foreach($valoreE as $chiave=>$valore) {
-                    if($chiave != "fotoProfilo") {
-                        echo ("<p>$chiave = $valore</p> <br/>");
-                    } else {
-                        echo("<img id='myImage' src='files/$valore' style='height: 100px;width: 100px;' />");
-                    }
-                    
-                }
-            }
+            $figo = json_encode($array);
+            echo($figo);
         } else {
-            echo("Credenziali errate");
+            echo("ERRORE");
         }
-        
-        
     } catch (PDOException $ex) {
         echo ("NOT GOOD. <br />Errore : " . $ex->getMessage());
     }
@@ -54,10 +45,20 @@ if($tipoAzione == "0") {
     try {
         $conn = new PDO("mysql:host=$servername;dbname=$dbName", $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO Studente (matr, nome, cognome, sesso, pwd, fotoProfilo)";
-        $sql .= "VALUES ($matr, '$nome', '$cognome', '$sesso', '$passwd', '$nomeImmagine')";
-        $conn->exec($sql);
-        echo ("VERY GOOD e nome immagine : $nomeImmagine");
+        
+        $sql = "SELECT * FROM studente WHERE matr = '$matr'";
+        $output = $conn->query($sql);
+        
+        if($output->rowCount() == 0){ // Conto il numero di righe ottenute, se è uguale a 0 allora la matricola non esiste
+            $sql = "INSERT INTO Studente (matr, nome, cognome, sesso, pwd, fotoProfilo)";
+            $sql .= "VALUES ($matr, '$nome', '$cognome', '$sesso', '$passwd', '$nomeImmagine')";
+            $conn->exec($sql);
+        echo ("OK");
+        } else {
+            echo("Utente già registrato.");
+        }
+        
+        
     } catch (PDOException $ex) {
         echo ("NOT GOOD. <br />Errore : " . $ex->getMessage());
     }

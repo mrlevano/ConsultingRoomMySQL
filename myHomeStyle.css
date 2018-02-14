@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 14-feb-2018, 17.56.15
+    Author     : jesus
+*/
+
+body {
+    background-color: #cccccc;
+}
+
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+@media only screen and (max-width: 700px) { /*css eseguito solo se la condizione è vera*/
+    .sidenav {
+        height: auto;
+        padding: 15px;
+    }
+    .row.content {height:auto;} 
+}
+
+@media only screen and (min-width: 768px) { /*css eseguito solo se la condizione è vera*/
+    body {
+        background-image: url("myHomeImage.jpg");
+        background-size: 100%;
+    }
+}
