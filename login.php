@@ -72,7 +72,6 @@ and open the template in the editor.
                 </div>
             </div>
             <input type="button" id="bottone" value="Esegui Login" onclick="login()" />
-            <input type="hidden" id="azione" name="azione" value="0" />
             <div class="row">
                 <div id="ajaxResponse" class="col-md-6">
                 </div>

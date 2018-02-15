@@ -11,7 +11,7 @@ $(document).ready(function(){
     isLoggato = sessionStorage.getItem("isLoggato");
     if(isLoggato === "true") {
         $("#bottoniUtente").html("<li onclick='logout()'><a href='login.php'><span class='glyphicon glyphicon-log-out'></span> Log Out</a></li>");
-        datiUtente = $.parseJSON(sessionStorage.getItem("datiUtente"));
+        datiUtente = $.parseJSON(sessionStorage.getItem("datiUtente")); // TODO Gestire le eccezioni che potrebbero generarsi durante l'esecuzione di questo file
         $("#myName").html(datiUtente[0].nome);
     } else {
         $("#bottoniUtente").html("<li><a href='registrazione.php'><span class='glyphicon glyphicon-user'></span> Sign Up</a></li> <li><a href='login.php'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>");
@@ -26,12 +26,12 @@ $(document).ready(function(){
 });
 
 function registrati() {
-    var tipo = $("#azione").val(); ; // 0 = login ; 1 = registrazione
+    var tipo = 1; // 1 = registrazione
     var matricola = $("#matricola").val();
     var nome = $("#nome").val();
     var cognome = $("#cognome").val();
     var sesso = $(":radio:checked").val();
-    var password = $("#password").val();
+    var password = $("#password").val(); // TODO Chiedere di confermare della password
     var ok = controlloCampi();
     var nomeImmagine = caricaImmagine();
     if(ok) {
@@ -47,17 +47,16 @@ function registrati() {
         }
         ,function(data) {
             if(data !== "ERRORE") {
-                window.location = "index.php";
+                window.location = "login.php"; // TODO Dopo registrazione eseguire un login automatico con i parametri appena immessi
             } else {
                 $("#ajaxResponse").html("Login fallito");
             }
-            
         });
     }
 }
 
 function login() {
-    var tipo = $("#azione").val(); ; // 0 = login ; 1 = registrazione
+    var tipo = 0; // 0 = login
     var matricola = $("#matricola").val();
     var password = $("#password").val();
     
@@ -81,8 +80,6 @@ function login() {
             } else {
                 $("#ajaxResponse").html("Login fallito");
             }
-            
-            
         });
     }
 }
@@ -102,7 +99,7 @@ function controlloCampi() {
     return ok;
 }
 
-function caricaImmagine() {
+function caricaImmagine() { // TODO Eseguire prima la registrazione e poi fare l'upload dell'immagine
     var formData = new FormData();
     var file = $("#selImmagine")[0].files[0]; // Ottengo il file
     var nomeImmagine = $("#selImmagine").val().replace("C:\\fakepath\\", ""); // Ottengo il nome del file
